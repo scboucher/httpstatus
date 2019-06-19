@@ -93,6 +93,8 @@ httpstatus = {
 @app.route("/", methods=['POST'])
 def hello():
     data = request.form
+    if not data['text'] in httpstatus.keys():
+        return "Invalid Status Code", 400
     response_json = {'response_type': 'in_channel',
                      'text': 'HTTP Status: ' + data['text'] + '\n' + httpstatus[data['text']],
                      'attachments': [{
