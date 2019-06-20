@@ -28,3 +28,9 @@ def test_post_slash_invalid_code(client):
     rv = client.post('/', data=dict(text=527) )
     assert 200 == rv.status_code
     assert b'Invalid Status Code' in rv.data
+
+def test_post_slash_empty(client):
+    """Test Post / . with Empty data should return the help"""
+    rv = client.post('/', data=dict(text="") )
+    assert 200 == rv.status_code
+    assert b':catshake:' in rv.data

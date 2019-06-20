@@ -94,7 +94,13 @@ httpstatus = {
 @app.route("/", methods=['POST'])
 def hello():
     data = request.form
-    if not data['text'] in httpstatus.keys():
+    if data['text'] == "":
+        response = jsonify(response_type='ephemeral',
+                           text=':catshake: How to use `/http` command:',
+                           attachments=[{
+                                'text': "Type a status code _e.g._ /http 400"
+                           }])
+    elif not data['text'] in httpstatus.keys():
         response = jsonify(response_type='ephemeral',
                            text=data['text'] + ': Invalid Status Code',
                            attachments=[{
