@@ -1,10 +1,10 @@
 import pytest
-import hello
+import http_status
 @pytest.fixture
 def client():
-    hello.app.config['TESTING'] = True
-    client = hello.app.test_client()
-    with hello.app.app_context():
+    http_status.app.config['TESTING'] = True
+    client = http_status.app.test_client()
+    with http_status.app.app_context():
         pass
     yield client
 

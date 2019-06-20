@@ -1,1 +1,1 @@
-web: ./hello.py
+web: ./http_status.py

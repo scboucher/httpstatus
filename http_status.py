@@ -92,7 +92,7 @@ httpstatus = {
 
 
 @app.route("/", methods=['POST'])
-def hello():
+def status():
     data = request.form
     if data['text'] == "":
         response = jsonify(response_type='ephemeral',
