@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-from flask import Flask, request
+from flask import Flask, request, jsonify
 import json
 import os
 app = Flask(__name__)
 
+SHAME_GIF = 'https://media.tenor.com/images/f6f91f0f5bd4d733e1fb9dfee1c37580/tenor.gif'
 httpstatus = {
     '100': 'Continue',
     '101': 'Switching Protocols',
@@ -94,17 +95,17 @@ httpstatus = {
 def hello():
     data = request.form
     if not data['text'] in httpstatus.keys():
-        return "Invalid Status Code", 400
-    response_json = {'response_type': 'in_channel',
-                     'text': 'HTTP Status: ' + data['text'] + '\n' + httpstatus[data['text']],
-                     'attachments': [{
-                         'image_url': 'https://http.cat/' + data['text']
-                     }]}
-    response = app.response_class(
-        response=json.dumps(response_json),
-        status=200,
-        mimetype='application/json')
-
+        response = jsonify(response_type='ephemeral',
+                           text=data['text'] + ': Invalid Status Code',
+                           attachments=[{
+                               'image_url': SHAME_GIF,
+                               'pretext': "Shame!"
+                           }])
+    else:
+        response = jsonify(response_type='in_channel',  attachments=[{
+            'image_url': 'https://http.cat/' + data['text'],
+            'pretext':  data['text'] + '\n' + httpstatus[data['text']]
+        }])
     return response
 
 

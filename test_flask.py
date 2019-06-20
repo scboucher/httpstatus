@@ -26,5 +26,5 @@ def test_post_slash(client):
 def test_post_slash_invalid_code(client):
     """Test Post / . with invalid status code"""
     rv = client.post('/', data=dict(text=527) )
-    assert 400 == rv.status_code
+    assert 200 == rv.status_code
     assert b'Invalid Status Code' in rv.data
